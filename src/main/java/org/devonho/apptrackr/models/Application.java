@@ -1,4 +1,4 @@
-package org.devonho.apptrackr;
+package org.devonho.apptrackr.models;
 
 import org.springframework.data.annotation.Id;
 
