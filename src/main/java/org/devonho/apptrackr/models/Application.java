@@ -1,10 +1,7 @@
 package org.devonho.apptrackr.models;
 
-import org.springframework.data.annotation.Id;
-
 public class Application {
 
-	@Id
 	private String id;
 	private JobListing jobListing;
 
@@ -19,6 +16,18 @@ public class Application {
 	public String getId() {
 		return id;
 	}
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public JobListing getJobListing() {
+    return this.jobListing;
+  }
+
+  public void setJobListing(JobListing listing) {
+    this.jobListing = listing;
+  }
 
 	@Override
 	public String toString() {
