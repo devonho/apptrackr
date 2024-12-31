@@ -1,21 +1,10 @@
 services:
-  mongodb:
-    image: mongo:latest
-    hostname: apptrackrmongo
+  apptrackr:
+    build: .
+    environment:
+      - ANTHROPIC_API_KEY
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/creds.json
     volumes:
-      - ./db/data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/creds.json
     ports:
-      - 27017:27017
-  mongodb-ui:
-    image: mongo-express:latest
-    environment:
-    - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-    - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-    - ME_CONFIG_MONGODB_SERVER=apptrackrmongo
-    ports:
-    - 8081:8081
-    depends_on:
-      - mongodb
+      - 8501:8501
