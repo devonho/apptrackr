@@ -4,7 +4,12 @@ services:
     environment:
       - ANTHROPIC_API_KEY
       - GOOGLE_APPLICATION_CREDENTIALS=/app/creds.json
+      - OAUTH2_PROVIDER
+      - OAUTH2_CLIENT_ID
+      - OAUTH2_CLIENT_SECRET
+      - OAUTH2_REDIRECT_URL
+      - PORT=8080
     volumes:
       - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/creds.json
     ports:
-      - 8501:8501
+      - 8080:8080
