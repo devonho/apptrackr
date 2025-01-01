@@ -12,12 +12,20 @@ else:
     save_button = None
     cv_text_area = None
 
+    def handle_select():
+        cv = [cv for cv in cvs if cv.title == st.session_state.w_cv_title][0]
+        st.session_state.w_cv_content = cv.content
+        
     def handle_save():
-        print(cv_text_area.value)
-
+        cv = [cv for cv in cvs if cv.title == st.session_state.w_cv_title][0]
+        cv.content = st.session_state.w_cv_content
+        DB.updateRecord(cv.document_id, cv)
+        st.success("Successful.")
 
     st.title('Update CV')    
-    docs = [doc.content for doc in DB.retrieveRecords(Resume, userhash)]
-    cv_text_area = st.text_area("CV", docs[0])  
+
+    cvs = [cv for cv in DB.retrieveRecords(Resume, userhash)]
+    st.selectbox("CV", [cv.title for cv in cvs], index=None, key="w_cv_title", on_change=handle_select)
+    st.text_area("Contents", key="w_cv_content")
 
     st.button("Save", on_click=handle_save)

@@ -16,6 +16,7 @@ class BaseType:
             try:
                 if type(data) == DocumentSnapshot:
                     val = data.get(f)
+                    setattr(self, "document_id", data.reference.path.split("/")[1])
                 else:
                     val = data[f]
             except KeyError: 

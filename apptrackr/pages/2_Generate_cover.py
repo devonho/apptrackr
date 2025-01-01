@@ -55,5 +55,6 @@ else:
             })
             DB.createRecord(ja)
         st.session_state.w_cover = output["cover_letter"]
+        st.success("Successful.")
 
     st.button("Generate", on_click=lambda : generate())
