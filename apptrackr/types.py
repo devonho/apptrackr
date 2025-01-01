@@ -102,6 +102,7 @@ class Username(BaseType):
             ["username",
             "email",
             "first_name",
-            "last_name"],
+            "last_name",
+            "role"],
             "usernames"
         )        
