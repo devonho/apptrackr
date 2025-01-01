@@ -30,4 +30,4 @@ else:
     st.text_area("Role Organization", key="w_role_org")  
     st.text_area("Job Description", key="w_content")  
 
-    st.button("Save", on_click=handle_save)
+    st.button("Add", on_click=handle_save)

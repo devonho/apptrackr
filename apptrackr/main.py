@@ -41,6 +41,13 @@ else:
             * Curate different versions of CVs
             * Track and update application status
             * Scan designated email (coming)
+                
+            ## Usage
+            1. Create resume
+            2. Add JD
+            3. Chat with JD and resume
+            4. Create cover letter
+            5. Check on application status 
 
             ## Github
             Check out our [repo](https://github.com/devonho/apptrackr.git)
