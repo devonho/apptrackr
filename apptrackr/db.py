@@ -16,37 +16,45 @@ class DB:
         client.close()            
         return docs
 
-    def createApplication(rec):      
-        DB._createRecord("applications", rec)
+    def createRecord(record):
+        collection_name = record.collection_name
+        d = record.toDict()
+        DB._createRecord(collection_name, d)
 
-    def retrieveApplications():      
-        def marshal(rec):
-            res = {}
-            fields = ["job_title", "job_description", "resume", "cover_letter", "system_prompt",]
-            for f in fields:
-                try:                    
-                    res[f] = rec.get(f)
-                except Exception:
-                    res[f] = None
-            return res
-
-        recs = [marshal(rec) for rec in DB._retrieveRecords("applications")]
-
-
-
+    def retrieveRecords(recordType : type):
+        collection_name = recordType({}).collection_name
+        recs = [rec for rec in DB._retrieveRecords(collection_name)]
+        recs = [recordType(rec) for rec in recs]
         return recs
 
-    def createResume(rec):      
-        DB._createRecord("resumes", rec)
+    # def createApplication(rec):      
+    #     DB._createRecord("applications", rec)
 
-    def retrieveResumes():      
-        return [{"content": rec.get("content")} for rec in DB._retrieveRecords("resumes")]
+    # def retrieveApplications():      
+    #     def marshal(rec):
+    #         res = {}
+    #         fields = ["job_title", "job_description", "resume", "cover_letter", "system_prompt",]
+    #         for f in fields:
+    #             try:                    
+    #                 res[f] = rec.get(f)
+    #             except Exception:
+    #                 res[f] = None
+    #         return res
+
+    #     recs = [marshal(rec) for rec in DB._retrieveRecords("applications")]
+    #     return recs
+
+    # def createResume(rec):      
+    #     DB._createRecord("resumes", rec)
+
+    # def retrieveResumes():      
+    #     return [{"content": rec.get("content")} for rec in DB._retrieveRecords("resumes")]
     
-    def createSysPrompt(rec):      
-        DB._createRecord("system_prompts", rec)
+    # def createSysPrompt(rec):      
+    #     DB._createRecord("system_prompts", rec)
 
-    def retrieveSysPrompts():      
-        return [{"content": rec.get("content")} for rec in DB._retrieveRecords("system_prompts")]
+    # def retrieveSysPrompts():      
+    #     return [{"content": rec.get("content")} for rec in DB._retrieveRecords("system_prompts")]
 
 if __name__ == "__main__":
     # with open("system.txt") as f:

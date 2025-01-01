@@ -36,3 +36,9 @@ build/
 ## Data ##
 db/
 .mvn/
+
+
+apptrackr/__pycache__
+notebooks/
+
+tests/__pycache__

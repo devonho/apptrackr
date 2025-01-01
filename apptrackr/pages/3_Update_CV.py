@@ -2,22 +2,20 @@ import streamlit as st
 import pandas as pd
 
 from apptrackr.db import DB
-from apptrackr.llm import LLMClient
+from apptrackr.types import Resume
 
-save_button = None
-cv_text_area = None
+if st.session_state['authentication_status'] == None:
+    st.switch_page("main.py")
+else:
+    save_button = None
+    cv_text_area = None
 
-def handle_save():
-    print(cv_text_area.value)
+    def handle_save():
+        print(cv_text_area.value)
 
 
-def show_generate_cover_page():
-    global cv_text_area
     st.title('Update CV')    
-    docs = [doc.get("content") for doc in DB.retrieveResumes()]
+    docs = [doc.content for doc in DB.retrieveRecords(Resume)]
     cv_text_area = st.text_area("CV", docs[0])  
 
     st.button("Save", on_click=handle_save)
-
-if __name__ == "__main__":
-    show_generate_cover_page()
