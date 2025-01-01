@@ -9,10 +9,14 @@ class DB:
         collection.document().set(rec)
         client.close()            
 
-    def _retrieveRecords(collection):
+    def _retrieveRecords(collection, userhash=None):
         client = Client(database=DB.db_name)
         collection = client.collection(collection)
-        docs = collection.stream()
+        docs = []
+        if userhash == None:
+            docs = collection.stream()
+        else:
+            docs = collection.where(field_path="owner_id",op_string="==",value=userhash).stream()
         client.close()            
         return docs
 
@@ -21,46 +25,10 @@ class DB:
         d = record.toDict()
         DB._createRecord(collection_name, d)
 
-    def retrieveRecords(recordType : type):
+    def retrieveRecords(recordType : type, userhash=None):
         collection_name = recordType({}).collection_name
-        recs = [rec for rec in DB._retrieveRecords(collection_name)]
+        recs = [rec for rec in DB._retrieveRecords(collection_name, userhash)]
         recs = [recordType(rec) for rec in recs]
         return recs
 
-    # def createApplication(rec):      
-    #     DB._createRecord("applications", rec)
-
-    # def retrieveApplications():      
-    #     def marshal(rec):
-    #         res = {}
-    #         fields = ["job_title", "job_description", "resume", "cover_letter", "system_prompt",]
-    #         for f in fields:
-    #             try:                    
-    #                 res[f] = rec.get(f)
-    #             except Exception:
-    #                 res[f] = None
-    #         return res
-
-    #     recs = [marshal(rec) for rec in DB._retrieveRecords("applications")]
-    #     return recs
-
-    # def createResume(rec):      
-    #     DB._createRecord("resumes", rec)
-
-    # def retrieveResumes():      
-    #     return [{"content": rec.get("content")} for rec in DB._retrieveRecords("resumes")]
-    
-    # def createSysPrompt(rec):      
-    #     DB._createRecord("system_prompts", rec)
-
-    # def retrieveSysPrompts():      
-    #     return [{"content": rec.get("content")} for rec in DB._retrieveRecords("system_prompts")]
-
-if __name__ == "__main__":
-    # with open("system.txt") as f:
-    #     text = f.read()
-    #     DB.createSysPrompt({"content": text})
-
-    res = DB.retrieveApplications()
-    print(res)
-
+ 
