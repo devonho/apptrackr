@@ -23,3 +23,16 @@ class LLMClient:
         }
         
         return cover_letter
+    
+    def chat(messages):
+        system_prompt = """ You are an assistant that gives feedback to users about their resume with reference to a job description. """
+
+        client = anthropic.Anthropic()
+
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=4096,
+            system=system_prompt,
+            messages=messages
+        )
+        return response.content[0].text
